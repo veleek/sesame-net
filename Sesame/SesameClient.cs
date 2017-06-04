@@ -22,8 +22,7 @@ namespace Ben.Sesame
         {
             get
             {
-                IEnumerable<string> values;
-                if (this.DefaultRequestHeaders.TryGetValues("X-Authorization", out values))
+                if (this.DefaultRequestHeaders.TryGetValues("X-Authorization", out IEnumerable<string> values))
                 {
                     return values?.FirstOrDefault();
                 }
@@ -82,6 +81,11 @@ namespace Ben.Sesame
 
         public Task ControlSesame(SesameInfo sesame, ControlType type)
         {
+            if(type == ControlType.Toggle)
+            {
+                type = sesame.IsUnlocked ? ControlType.Lock : ControlType.Unlock;
+            }
+
             return ControlSesame(sesame.DeviceId, type.ToString().ToLower());
         }
 

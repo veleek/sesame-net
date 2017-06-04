@@ -5,5 +5,6 @@
         Unknown,
         Lock,
         Unlock,
+        Toggle,
     }
 }
