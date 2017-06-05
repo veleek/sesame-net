@@ -1,6 +1,6 @@
 ﻿namespace Ben.Sesame
 {
-    public enum ControlType
+    public enum ControlOperation
     {
         Unknown,
         Lock,

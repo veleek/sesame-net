@@ -4,6 +4,18 @@
     <TargetFramework>netstandard1.4</TargetFramework>
     <RootNamespace>Ben.Sesame</RootNamespace>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <Title>Sesame.NET</Title>
+    <Authors>Ben Randall</Authors>
+    <Owners>veleek</Owners>
+    <PackageLicenseUrl>https://github.com/veleek/sesame-net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/veleek/sesame-net/</PackageProjectUrl>
+    <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+    <Description>Sesame.NET is a simple client for interacting with your Sesame devices.</Description>
+    <Copyright>Copyright 2017</Copyright>
+    <PackageTags>Sesame API Client</PackageTags>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />

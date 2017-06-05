@@ -33,19 +33,19 @@ namespace SesameTest
         public async Task ControlSesameWithoutLoggingIn()
         {
             SesameClient loggedOutClient = new SesameClient();
-            await loggedOutClient.ControlSesame(sesames[0], ControlType.Lock);
+            await loggedOutClient.ControlSesame(sesames[0], ControlOperation.Lock);
         }
 
         [TestMethod]
         public async Task LockSesame()
         {
-            await client.ControlSesame(sesames[0], ControlType.Lock);
+            await client.ControlSesame(sesames[0], ControlOperation.Lock);
         }
 
         [TestMethod]
         public async Task UnlockSesame()
         {
-            await client.ControlSesame(sesames[0], ControlType.Unlock);
+            await client.ControlSesame(sesames[0], ControlOperation.Unlock);
         }
     }
 }

@@ -79,17 +79,17 @@ namespace Ben.Sesame
             return listSesameResponse.Sesames;
         }
 
-        public Task ControlSesame(SesameInfo sesame, ControlType type)
+        public Task ControlSesame(SesameInfo sesame, ControlOperation operation)
         {
-            if(type == ControlType.Toggle)
+            if(operation == ControlOperation.Toggle)
             {
-                type = sesame.IsUnlocked ? ControlType.Lock : ControlType.Unlock;
+                operation = sesame.IsUnlocked ? ControlOperation.Lock : ControlOperation.Unlock;
             }
 
-            return ControlSesame(sesame.DeviceId, type.ToString().ToLower());
+            return ControlSesame(sesame.DeviceId, operation.ToString().ToLower());
         }
 
-        public async Task ControlSesame(string sesameId, string type)
+        public async Task ControlSesame(string sesameId, string operation)
         {
             this.EnsureLoggedIn();
 
@@ -97,7 +97,7 @@ namespace Ben.Sesame
 
             ControlRequest body = new ControlRequest
             {
-                Type = type,
+                Type = operation,
             };
 
             request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
@@ -113,11 +113,5 @@ namespace Ben.Sesame
                 throw new SesameException("You must login before calling this method.");
             }
         }
-    }
-
-    public class ListSesamesResponse
-    {
-        [JsonProperty("sesames")]
-        public List<SesameInfo> Sesames { get; set; }
     }
 }
