@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Ben.Sesame
 {
+    /// <summary>
+    /// Contains the detailed device information for a single Sesame device.
+    /// </summary>
     public class SesameInfo
     {
         /// <summary>

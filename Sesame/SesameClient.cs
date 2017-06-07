@@ -13,9 +13,9 @@ namespace Ben.Sesame
     /// </summary>
     public class SesameClient : HttpClient
     {
-        public const string ApiBaseAddress = "https://api.candyhouse.co";
-        public const string ApiVersion = "v1";
-        public const string AuthorizationHeaderName = "X-Authorization";
+        private const string ApiBaseAddress = "https://api.candyhouse.co";
+        private const string ApiVersion = "v1";
+        private const string AuthorizationHeaderName = "X-Authorization";
         
         /// <summary>
         /// Initialize a new <see cref="SesameClient"/>
@@ -137,18 +137,13 @@ namespace Ben.Sesame
         /// <returns>A task that indicates when the control operation is complete.</returns>
         public Task ControlSesame(SesameInfo sesame, ControlOperation operation)
         {
-            if(operation == ControlOperation.Toggle)
-            {
-                operation = sesame.IsUnlocked ? ControlOperation.Lock : ControlOperation.Unlock;
-            }
-
             return ControlSesame(sesame.DeviceId, operation.ToString().ToLower());
         }
 
         /// <summary>
         /// Send a control request to a Sesame to execute an operation.
         /// </summary>
-        /// <param name="sesame">The ID of the Sesame to control.</param>
+        /// <param name="sesameId">The ID of the Sesame to control.</param>
         /// <param name="operation">The operation to execute.</param>
         /// <returns>A task that indicates when the control operation is complete.</returns>
         public async Task ControlSesame(string sesameId, string operation)
