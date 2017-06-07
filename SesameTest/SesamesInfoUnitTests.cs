@@ -6,18 +6,13 @@ using System.Collections.Generic;
 namespace SesameTest
 {
     [TestClass]
-    public class ListSesamesUnitTests
+    public class SesameInfoUnitTests : SesameTestBase
     {
-        private SesameClient client;
-
         [TestInitialize]
-        public void Initialize()
+        public override void Initialize()
         {
-            client = new SesameClient();
-
-            string email = ProtectedData.Read("email");
-            string password = ProtectedData.Read("password");
-            client.LoginAsync(email, password).Wait();
+            base.Initialize();
+            this.LoginAsync().Wait();
         }
 
         [TestMethod]
@@ -34,6 +29,16 @@ namespace SesameTest
             SesameClient loggedOutClient = new SesameClient();
             List<SesameInfo> sesames = await loggedOutClient.ListSesamesAsync();
             Assert.AreEqual(1, sesames.Count);
+        }
+
+        [TestMethod]
+        public async Task GetSesame()
+        {
+            List<SesameInfo> sesames = await client.ListSesamesAsync();
+            SesameInfo sesame = await client.GetSesameAsync(sesames[0].DeviceId);
+
+            Assert.AreEqual(sesames[0].DeviceId, sesame.DeviceId, "DeviceId");
+            Assert.AreEqual(sesames[0].Nickname, sesame.Nickname, "Nickname");
         }
     }
 }

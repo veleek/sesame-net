@@ -5,22 +5,12 @@ using System.Threading.Tasks;
 namespace SesameTest
 {
     [TestClass]
-    public class LoginUnitTests
+    public class LoginUnitTests : SesameTestBase
     {
-        private SesameClient client;
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            client = new SesameClient();
-        }
-
         [TestMethod]
         public async Task ValidLogin()
         {
-            string email = ProtectedData.Read("email");
-            string password = ProtectedData.Read("password");
-            await client.LoginAsync(email, password);
+            await this.LoginAsync();
         }
 
         [TestMethod]
@@ -29,6 +19,22 @@ namespace SesameTest
         {
             string email = ProtectedData.Read("email");
             await client.LoginAsync(email, "incorrectpassword");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SesameException))]
+        public async Task InvalidEmail()
+        {
+            string password = ProtectedData.Read("password");
+            await client.LoginAsync("incorrectemail", password);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SesameException))]
+        public async Task IncorrectEmail()
+        {
+            string password = ProtectedData.Read("password");
+            await client.LoginAsync("test@mail.com", password);
         }
     }
 }
