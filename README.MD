@@ -4,7 +4,7 @@ A .NET client for the [Sesame API](https://docs.candyhouse.co/).  Sesame.NET is 
 
 ## Installation
 
-You can either download the [Sesame.NET NuGet package](https://www.nuget.org/packages/Ben.Sesame) or download the binaries [directly from GitHub](./releases/latest).
+You can either download the <strike>[Sesame.NET NuGet package](https://www.nuget.org/packages/Ben.Sesame)</strike> (not available yet) or download the binaries [directly from GitHub](https://github.com/veleek/sesame-net/releases/latest).
 
 ## Usage
 
@@ -19,8 +19,14 @@ You can either download the [Sesame.NET NuGet package](https://www.nuget.org/pac
 3. Make other calls to list or control sesames.
 
     ```csharp
+    // Get ALL Sesames associated with the account.
     List<SesameInfo> sesames = await client.ListSesamesAsync();
-    await client.ControlSesameAsync(sesames[0], ControlType.Lock);
+
+    // Get a specific Sesame if you already have the ID.
+    SesameInfo sesame = await client.GetSesameAsync("ABCD12345678");
+
+    // Execute operations.
+    await client.ControlSesameAsync(sesames, ControlType.Lock);
     ```
 
 ## Building

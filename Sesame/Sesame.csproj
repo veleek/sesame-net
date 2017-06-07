@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <RootNamespace>Ben.Sesame</RootNamespace>
+    <DocumentationFile>bin\Debug\netstandard1.4\Sesame.xml</DocumentationFile>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -15,10 +16,6 @@
     <Description>Sesame.NET is a simple client for interacting with your Sesame devices.</Description>
     <Copyright>Copyright 2017</Copyright>
     <PackageTags>Sesame API Client</PackageTags>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\Sesame.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
