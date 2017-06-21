@@ -43,3 +43,5 @@ Sesame.NET is built using .NET Core against .NET Standard 1.4.
 4. *(Optional)* You can generate a NuGet package using the pack command
         
         dotnet pack Sesame
+        # To build release package
+        #   dotnet pack Sesame -c Release
