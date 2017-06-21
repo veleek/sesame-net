@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Ben.Sesame
+namespace Ben.CandyHouse
 {
     /// <summary>
     /// The response content for a List Sesames request.
@@ -12,6 +12,6 @@ namespace Ben.Sesame
         /// The Sesame device details.
         /// </summary>
         [JsonProperty("sesames")]
-        public List<SesameInfo> Sesames { get; set; }
+        public List<Sesame> Sesames { get; set; }
     }
 }

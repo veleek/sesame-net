@@ -1,4 +1,4 @@
-﻿namespace Ben.Sesame
+﻿namespace Ben.CandyHouse
 {
     /// <summary>
     /// The types of operations that can be executed by a Sesame.

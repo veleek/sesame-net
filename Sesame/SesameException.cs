@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ben.Sesame
+namespace Ben.CandyHouse
 {
     /// <summary>
     /// An exception that is thrown by <see cref="SesameClient"/> when an error occurs.
@@ -13,6 +13,7 @@ namespace Ben.Sesame
         /// <param name="error">The error that caused this exception.</param>
         public SesameException(SesameError error) : this(error.Message)
         {
+            this.Code = error.Code;
         }
 
         /// <summary>
@@ -21,6 +22,7 @@ namespace Ben.Sesame
         /// <param name="message">A message describing the error.</param>
         public SesameException(string message) : base(message)
         {
+            this.Code = SesameErrorCode.Unknown;
         }
 
         /// <summary>
@@ -30,6 +32,12 @@ namespace Ben.Sesame
         /// <param name="innerException">The exception that caused this exception.</param>
         public SesameException(string message, Exception innerException) : base(message, innerException)
         {
+            this.Code = SesameErrorCode.Unknown;
         }
+
+        /// <summary>
+        /// Gets the error code associated with this exception.
+        /// </summary>
+        public SesameErrorCode Code { get; set; }
     }
 }

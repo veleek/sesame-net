@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ben.Sesame;
+using Ben.CandyHouse;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ namespace SesameTest
         [TestMethod]
         public async Task ListSesames()
         {
-            List<SesameInfo> sesames = await client.ListSesamesAsync();
+            List<Sesame> sesames = await this.client.ListSesamesAsync();
             Assert.AreEqual(1, sesames.Count);
         }
 
@@ -27,15 +27,15 @@ namespace SesameTest
         public async Task ListSesamesWithoutLoggingIn()
         {
             SesameClient loggedOutClient = new SesameClient();
-            List<SesameInfo> sesames = await loggedOutClient.ListSesamesAsync();
+            List<Sesame> sesames = await loggedOutClient.ListSesamesAsync();
             Assert.AreEqual(1, sesames.Count);
         }
 
         [TestMethod]
         public async Task GetSesame()
         {
-            List<SesameInfo> sesames = await client.ListSesamesAsync();
-            SesameInfo sesame = await client.GetSesameAsync(sesames[0].DeviceId);
+            List<Sesame> sesames = await this.client.ListSesamesAsync();
+            Sesame sesame = await this.client.GetSesameAsync(sesames[0].DeviceId);
 
             Assert.AreEqual(sesames[0].DeviceId, sesame.DeviceId, "DeviceId");
             Assert.AreEqual(sesames[0].Nickname, sesame.Nickname, "Nickname");

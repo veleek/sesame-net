@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ben.Sesame
+namespace Ben.CandyHouse
 {
     /// <summary>
     /// A client library for interacting with the Sesame API.
@@ -87,7 +87,7 @@ namespace Ben.Sesame
         /// Get the detailed device information for all of the Sesames the logged in account has access to.
         /// </summary>
         /// <returns>A list of device details for the authorized Sesames.</returns>
-        public async Task<List<SesameInfo>> ListSesamesAsync()
+        public async Task<List<Sesame>> ListSesamesAsync()
         {
             this.EnsureLoggedIn();
 
@@ -95,6 +95,12 @@ namespace Ben.Sesame
             HttpResponseMessage response = await this.SendAsync(request);
 
             ListSesamesResponse listSesameResponse = await response.Content.ReadAsJsonAsync<ListSesamesResponse>();
+
+            foreach (Sesame sesame in listSesameResponse.Sesames)
+            {
+                sesame.Client = this;
+            }
+
             return listSesameResponse.Sesames;
         }
 
@@ -103,14 +109,15 @@ namespace Ben.Sesame
         /// </summary>
         /// <param name="deviceId">The device ID of the Sesame to get details for.</param>
         /// <returns>The complete device detail for the Sesame.</returns>
-        public async Task<SesameInfo> GetSesameAsync(string deviceId)
+        public async Task<Sesame> GetSesameAsync(string deviceId)
         {
             this.EnsureLoggedIn();
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"{ApiVersion}/sesames/{deviceId}");
             HttpResponseMessage response = await this.SendAsync(request);
 
-            SesameInfo sesame = await response.Content.ReadAsJsonAsync<SesameInfo>();
+            Sesame sesame = await response.Content.ReadAsJsonAsync<Sesame>();
+            sesame.Client = this;
             // Currently DeviceId is not returned by this call so we need to manually set it if we want to use it.
             sesame.DeviceId = deviceId;
             return sesame;
@@ -121,12 +128,12 @@ namespace Ben.Sesame
         /// </summary>
         /// <param name="sesame">The sesame to refresh.</param>
         /// <returns>A task that indicates when the refresh operation is complete.</returns>
-        public async Task RefreshSesameAsync(SesameInfo sesame)
+        public async Task RefreshSesameAsync(Sesame sesame)
         {
-            SesameInfo updatedInfo = await GetSesameAsync(sesame.DeviceId);
-            sesame.ApiEnabled = sesame.ApiEnabled;
-            sesame.Battery = sesame.Battery;
-            sesame.IsUnlocked = sesame.IsUnlocked;
+            Sesame updated = await this.GetSesameAsync(sesame.DeviceId);
+            sesame.ApiEnabled = updated.ApiEnabled;
+            sesame.Battery = updated.Battery;
+            sesame.IsUnlocked = updated.IsUnlocked;
         }
 
         /// <summary>
@@ -135,9 +142,9 @@ namespace Ben.Sesame
         /// <param name="sesame">The Sesame to control.</param>
         /// <param name="operation">The operation to execute.</param>
         /// <returns>A task that indicates when the control operation is complete.</returns>
-        public Task ControlSesame(SesameInfo sesame, ControlOperation operation)
+        public Task ControlSesameAsync(Sesame sesame, ControlOperation operation)
         {
-            return ControlSesame(sesame.DeviceId, operation.ToString().ToLower());
+            return this.ControlSesameAsync(sesame.DeviceId, operation.ToString().ToLower());
         }
 
         /// <summary>
@@ -146,7 +153,7 @@ namespace Ben.Sesame
         /// <param name="sesameId">The ID of the Sesame to control.</param>
         /// <param name="operation">The operation to execute.</param>
         /// <returns>A task that indicates when the control operation is complete.</returns>
-        public async Task ControlSesame(string sesameId, string operation)
+        public async Task ControlSesameAsync(string sesameId, string operation)
         {
             this.EnsureLoggedIn();
 

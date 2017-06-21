@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Ben.Sesame
+namespace Ben.CandyHouse
 {
     /// <summary>
     /// The content return by a login request.

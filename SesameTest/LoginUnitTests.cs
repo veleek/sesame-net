@@ -1,6 +1,6 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ben.Sesame;
 using System.Threading.Tasks;
+using Ben.CandyHouse;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SesameTest
 {
@@ -14,27 +14,48 @@ namespace SesameTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SesameException))]
         public async Task IncorrectPassword()
         {
-            string email = ProtectedData.Read("email");
-            await client.LoginAsync(email, "incorrectpassword");
+            try
+            {
+                string email = ProtectedData.Read("email");
+                await this.client.LoginAsync(email, "incorrectpassword");
+                Assert.Fail("Expected an exception to be thrown.");
+            }
+            catch (SesameException e)
+            {
+                Assert.AreEqual(SesameErrorCode.IncorrectEmailOrPassword, e.Code);
+            }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SesameException))]
         public async Task InvalidEmail()
         {
-            string password = ProtectedData.Read("password");
-            await client.LoginAsync("incorrectemail", password);
+            try
+            {
+                string password = ProtectedData.Read("password");
+                await this.client.LoginAsync("incorrectemail", password);
+                Assert.Fail("Expected an exception to be thrown.");
+            }
+            catch (SesameException e)
+            {
+                Assert.AreEqual(SesameErrorCode.InvalidEmail, e.Code);
+            }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SesameException))]
         public async Task IncorrectEmail()
         {
-            string password = ProtectedData.Read("password");
-            await client.LoginAsync("test@mail.com", password);
+            try
+            {
+                string password = ProtectedData.Read("password");
+                await this.client.LoginAsync("test@mail.com", password);
+                Assert.Fail("Expected an exception to be thrown.");
+            }
+            catch (SesameException e)
+            {
+                Assert.AreEqual(SesameErrorCode.IncorrectEmailOrPassword, e.Code);
+            }
         }
     }
 }
