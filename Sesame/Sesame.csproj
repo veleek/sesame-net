@@ -8,6 +8,7 @@
   
   <PropertyGroup>
     <Title>Sesame.NET</Title>
+    <Version>1.1</Version>
     <Authors>Ben Randall</Authors>
     <Owners>veleek</Owners>
     <PackageLicenseUrl>https://github.com/veleek/sesame-net/blob/master/LICENSE</PackageLicenseUrl>

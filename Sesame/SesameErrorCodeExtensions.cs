@@ -45,6 +45,11 @@
             return errorCode.GetErrorClass() == 5;
         }
 
+        /// <summary>
+        /// Gets the error class for an error code.
+        /// </summary>
+        /// <param name="errorCode">The error code to get the class for.</param>
+        /// <returns>A numeric identifier that can be used to determine the specific class of error a code is for.</returns>
         public static int GetErrorClass(this SesameErrorCode errorCode)
         {
             return (int)errorCode / 10000;
