@@ -11,14 +11,8 @@ namespace SesameTest
         [TestInitialize]
         public virtual void Initialize()
         {
-            this.client = new SesameClient();
-        }
-
-        protected async Task LoginAsync()
-        {
-            string email = ProtectedData.Read("email");
-            string password = ProtectedData.Read("password");
-            await this.client.LoginAsync(email, password);
+            string apiKey = ProtectedData.Read("apiKey");
+            this.client = new SesameClient(apiKey);
         }
     }
 }

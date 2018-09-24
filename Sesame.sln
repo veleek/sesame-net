@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sesame", "Sesame\Sesame.csproj", "{EEF55FA0-688F-4B88-822F-0B6FEBD3172A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SesameTest", "SesameTest\SesameTest.csproj", "{1DE67BAB-9728-47FD-92DF-28B0BA3101AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SesameTest", "SesameTest\SesameTest.csproj", "{1DE67BAB-9728-47FD-92DF-28B0BA3101AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A25C5F1-66D0-4304-B200-47E09A3242E0}
 	EndGlobalSection
 EndGlobal

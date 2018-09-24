@@ -34,28 +34,40 @@ namespace Ben.CandyHouse
         public string DeviceId { get; set; }
 
         /// <summary>
+        /// Gets or sets the serial number for the Sesame.
+        /// </summary>
+        [JsonProperty("serial")]
+        public string Serial { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model of the Sesame.
+        /// </summary>
+        [JsonProperty("model")]
+        public string Model { get; set; }
+
+        /// <summary>
         /// Gets or sets the configured friendly name for the Sesame.
         /// </summary>
         [JsonProperty("nickname")]
         public string Nickname { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether the Sesame is unlocked.
+        /// Gets or sets a value that indicates whether the Sesame is locked.
         /// </summary>
-        [JsonProperty("is_unlocked")]
-        public bool IsUnlocked { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that indicates whether the Sesame is API-enabled.  It must be paired with Virtual Station or Wi-Fi Access Point for this functionality.
-        /// </summary>
-        [JsonProperty("api_enabled")]
-        public bool ApiEnabled { get; set; }
+        [JsonProperty("locked")]
+        public bool? IsLocked { get; set; }
 
         /// <summary>
         /// Gets or sets the percentage of battery life left on the Sesame.
         /// </summary>
         [JsonProperty("battery")]
         public int Battery { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the Sesame is currently responding.
+        /// </summary>
+        [JsonProperty("responsive")]
+        public bool IsResponsive { get; set; }
 
         /// <summary>
         /// Gets or sets any additional properties in the Sesame info object that were provided.
@@ -74,29 +86,68 @@ namespace Ben.CandyHouse
         /// <summary>
         /// Unlock this sesame.
         /// </summary>
-        public async Task UnlockAsync()
+        public async Task<string> UnlockAsync(bool waitForComplete = false)
         {
             if (this.Client == null)
             {
                 throw new InvalidOperationException("You must initialize Client before making any calls.");
             }
 
-            await this.Client.ControlSesameAsync(this, ControlOperation.Unlock);
-            this.IsUnlocked = true;
+            string taskId = await this.Client.ControlSesameAsync(this, ControlOperation.Unlock);
+
+            if (waitForComplete)
+            {
+                var executionResult = await this.Client.WaitForOperationAsync(taskId);
+                if (executionResult.Successful == true)
+                {
+                    this.IsLocked = false;
+                }
+                else
+                {
+                    throw new SesameException(executionResult.Error);
+                }
+            }
+
+            return taskId;
         }
 
         /// <summary>
         /// Lock this sesame.
         /// </summary>
-        public async Task LockAsync()
+        public async Task<string> LockAsync(bool waitForComplete = false)
         {
             if (this.Client == null)
             {
                 throw new InvalidOperationException("You must initialize Client before making any calls.");
             }
 
-            await this.Client.ControlSesameAsync(this, ControlOperation.Lock);
-            this.IsUnlocked = false;
+            string taskId = await this.Client.ControlSesameAsync(this, ControlOperation.Lock);
+
+            if (waitForComplete)
+            {
+                var executionResult = await this.Client.WaitForOperationAsync(taskId);
+                if (executionResult.Successful == true)
+                {
+                    this.IsLocked = true;
+                }
+                else
+                {
+                    throw new SesameException(executionResult.Error);
+                }
+            }
+
+            return taskId;
+        }
+
+        /// <summary>
+        /// Force the server to update the device status for this device.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<string> SyncAsync()
+        {
+            this.EnsureClient();
+
+            return await this.Client.ControlSesameAsync(this, ControlOperation.Sync);
         }
 
         /// <summary>
@@ -104,14 +155,17 @@ namespace Ben.CandyHouse
         /// </summary>
         public Task RefreshAsync()
         {
-            if (this.Client == null)
-            {
-                throw new InvalidOperationException("You must initialize Client before making any calls.");
-            }
+            this.EnsureClient();
 
             return this.Client.RefreshSesameAsync(this);
         }
 
-
+        private void EnsureClient()
+        {
+            if (this.Client == null)
+            {
+                throw new InvalidOperationException("You must initialize Client before making any calls.");
+            }
+        }
     }
 }

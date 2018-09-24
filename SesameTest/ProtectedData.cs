@@ -9,7 +9,7 @@ namespace SesameTest
         public static string Read(string name)
         {
             // SUPER HACK!!!  Not actually cryptographically protected or anything.
-            // Read "protected" data from a file on disk.  These file is not checked in so that they don't appear in git history.
+            // Read "protected" data from a file on disk.  This file is not checked in so that they don't appear in git history.
 
             string fileName = $"{name}.protected.dat";
             string folderName = Path.GetDirectoryName(typeof(ProtectedData).GetTypeInfo().Assembly.Location);

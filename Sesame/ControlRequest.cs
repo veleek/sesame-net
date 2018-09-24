@@ -10,7 +10,7 @@ namespace Ben.CandyHouse
         /// <summary>
         /// The operation to execute on the Sesame.
         /// </summary>
-        [JsonProperty("type")]
-        public string Type { get; set; }
+        [JsonProperty("command")]
+        public string Command { get; set; }
     }
 }

@@ -4,34 +4,35 @@ A .NET client for the [Sesame API](https://docs.candyhouse.co/).  Sesame.NET is 
 
 ## Installation
 
-You can either download the <strike>[Sesame.NET NuGet package](https://www.nuget.org/packages/Ben.Sesame)</strike> (not available yet) or download the binaries [directly from GitHub](https://github.com/veleek/sesame-net/releases/latest).
+You can either download the [Sesame.NET NuGet package](https://www.nuget.org/packages/Sesame) or download the binaries [directly from GitHub](https://github.com/veleek/sesame-net/releases/latest).
 
 ## Usage
 
 1. Initialize a new `SesameClient`.
 
-        SesameClient client = new SesameClient();
+    ```csharp
+    string apiKey = "<Sesame API Key>";
+    SesameClient client = new SesameClient(apiKey);
+    ```
 
-2. Login with your Sesame username and password.
-
-        client.Login("user@email.com", "super-password");
-
-3. Make other calls to list or control sesames.
+2. Make other calls to list or control sesames.
 
     ```csharp
     // Get ALL Sesames associated with the account.
-    List<SesameInfo> sesames = await client.ListSesamesAsync();
+    List<Sesames> sesames = await client.ListSesamesAsync();
 
-    // Get a specific Sesame if you already have the ID.
-    SesameInfo sesame = await client.GetSesameAsync("ABCD12345678");
+    // Get a specific sesame and refresh it's state.
+    Sesame sesame = sesames.FirstOrDefault(s => s.NickName == "Home");
+    await sesame.RefreshAsync();
 
     // Execute operations.
-    await client.ControlSesameAsync(sesames, ControlType.Lock);
+    await sesame.LockAsync();
+    await sesame.UnlockAsync();
     ```
 
 ## Building
 
-Sesame.NET is built using .NET Core against .NET Standard 1.4.
+Sesame.NET is built using .NET Core (.NET Standard 1.4 and 2.0).
 
 1. [Install .NET Core](https://www.microsoft.com/net/core)
 2. Clone the Sesame.NET repository

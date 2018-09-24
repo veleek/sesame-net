@@ -19,5 +19,10 @@
         /// Unlock the Sesame device.
         /// </summary>
         Unlock,
+
+        /// <summary>
+        /// Synce the Sesame device status.
+        /// </summary>
+        Sync,
     }
 }

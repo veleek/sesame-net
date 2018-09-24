@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Tracing;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ben.CandyHouse
 {
@@ -9,15 +8,9 @@ namespace Ben.CandyHouse
     public class SesameError
     {
         /// <summary>
-        /// Gets or sets the code for the error that occurred.
+        /// The error string.
         /// </summary>
-        [JsonProperty("code")]
-        public SesameErrorCode Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets the message indicating the error that occurred.
-        /// </summary>
-        [JsonProperty("message")]
-        public string Message { get; set; }
+        [JsonProperty("error")]
+        public string Error { get; set; }
     }
 }
