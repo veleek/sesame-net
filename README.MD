@@ -8,14 +8,15 @@ You can either download the [Sesame.NET NuGet package](https://www.nuget.org/pac
 
 ## Usage
 
-1. Initialize a new `SesameClient`.
+1. Configure a Sesame API Key on [the CandyHouse Dashboard](https://my.candyhouse.co/#/credentials).
+2. Initialize an instance of `SesameClient`.
 
     ```csharp
     string apiKey = "<Sesame API Key>";
     SesameClient client = new SesameClient(apiKey);
     ```
 
-2. Make other calls to list or control sesames.
+3. Make other calls to list or control sesames.
 
     ```csharp
     // Get ALL Sesames associated with the account.
